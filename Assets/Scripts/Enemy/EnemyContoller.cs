@@ -39,7 +39,7 @@ public class EnemyContoller : MonoBehaviour
         var idle = new EnemyIdleState<StatesEnum>();
         var dead = new EnemyDeadState<StatesEnum>(_model);
         var attack = new EnemyAttackState<StatesEnum>(_model);
-        var chase = new EnemyChaseState<StatesEnum>(_model, _steering, _obstacleAvoidance);
+        var chase = new EnemyChaseState<StatesEnum>(_model, target.transform, _steering, _obstacleAvoidance);
 
         idle.AddTransition(StatesEnum.Dead, dead);
         idle.AddTransition(StatesEnum.Attack, attack);
