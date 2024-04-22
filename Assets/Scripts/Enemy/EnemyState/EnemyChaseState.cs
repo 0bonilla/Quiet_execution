@@ -18,7 +18,6 @@ public class EnemyChaseState<T> : State<T>
     public override void Execute()
     {
         var dir = _obs.GetDir(_steering.GetDir(), false);
-        Debug.Log(dir);
         _model.Move(_model.transform.forward);
         _model.LookDir(dir);
     }

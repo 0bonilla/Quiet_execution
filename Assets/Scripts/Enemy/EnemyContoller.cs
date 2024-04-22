@@ -5,12 +5,19 @@ using UnityEngine;
 public class EnemyContoller : MonoBehaviour
 {
     public Rigidbody target;
+
+    #region Stats
     public float attackRange;
+    bool seen;
+    bool chasing;
+    Coroutine coroutine;
+    #endregion
 
     #region Steering
     public float timePrediction;
     public float angle;
     public float radius;
+    public float personalArea;
     public LayerMask maskObs;
     #endregion
 
@@ -45,10 +52,6 @@ public class EnemyContoller : MonoBehaviour
         idle.AddTransition(StatesEnum.Attack, attack);
         idle.AddTransition(StatesEnum.Chase, chase);
 
-        dead.AddTransition(StatesEnum.Idle, idle);
-        dead.AddTransition(StatesEnum.Attack, attack);
-        dead.AddTransition(StatesEnum.Chase, chase);
-
         attack.AddTransition(StatesEnum.Idle, idle);
         attack.AddTransition(StatesEnum.Dead, dead);
         attack.AddTransition(StatesEnum.Chase, chase);
@@ -63,7 +66,7 @@ public class EnemyContoller : MonoBehaviour
     {
         var seek = new Seek(_model.transform, target.transform);
         _steering = seek;
-        _obstacleAvoidance = new ObstacleAvoidance(_model.transform, angle, radius, maskObs);
+        _obstacleAvoidance = new ObstacleAvoidance(_model.transform, angle, radius, personalArea, maskObs);
     }
 
     void InitializedTree()
@@ -75,22 +78,49 @@ public class EnemyContoller : MonoBehaviour
         var chase = new ActionNode(() => _fsm.Transition(StatesEnum.Chase));
 
         //Questions
-        var qIsCooldown = new QuestionNode(() => _model.ACooldown, idle, attack);
-        var qAttackRange = new QuestionNode(QuestionAttackRange, qIsCooldown, chase);
+        var qKeepChaising = new QuestionNode(QuestionChaseTime, chase, idle);
+        var qAttackRange = new QuestionNode(QuestionAttackRange, attack, chase);
         var qLoS = new QuestionNode(QuestionLoS, qAttackRange, idle);
         var qHasLife = new QuestionNode(() => _model.Life > 0, qLoS, dead);
 
         _root = qHasLife;
+    }
+    bool QuestionChaseTime()
+    {
+        StartCoroutine(ChaseTime());
+        return chasing;
+    }
+    IEnumerator ChaseTime()
+    {
+        Debug.Log("Sigo");
+        yield return new WaitForSeconds(_model._totalChaseTime);
+        Debug.Log("dejo de seguir");
+        seen = false;
     }
     bool QuestionAttackRange()
     {
         return _los.CheckRange(target.transform, attackRange);
     }
     bool QuestionLoS()
-    {
-        return _los.CheckRange(target.transform)
-            && _los.CheckAngle(target.transform)
-            && _los.CheckView(target.transform);
+    {       
+        var currLoS = _los.CheckRange(target.transform)
+                    && _los.CheckAngle(target.transform)
+                    && _los.CheckView(target.transform);
+        if (currLoS == false && seen == true)
+        {
+            if (coroutine == null)
+            {
+                coroutine = StartCoroutine(ChaseTime());
+            }
+            return true;
+        }
+        if (coroutine != null)
+        {
+            StopCoroutine(ChaseTime());
+            coroutine = null;
+        }
+        seen = currLoS;
+        return seen;
     }
     private void Update()
     {

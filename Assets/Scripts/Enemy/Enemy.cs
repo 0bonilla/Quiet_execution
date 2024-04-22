@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] int life;
     [SerializeField] float speed;
+    public float _chaseTime;
+    public float _totalChaseTime;
     public bool ACooldown;
     Rigidbody _rb;
 

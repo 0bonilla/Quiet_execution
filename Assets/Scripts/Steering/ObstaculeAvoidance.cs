@@ -6,15 +6,17 @@ public class ObstacleAvoidance
 {
     float _angle;
     float _radius;
+    float _personalArea;
     Transform _entity;
     LayerMask _maskObs;
 
-    public ObstacleAvoidance(Transform entity, float angle, float radius, LayerMask maskObs)
+    public ObstacleAvoidance(Transform entity, float angle, float radius, float personalArea, LayerMask maskObs)
     {
         _angle = angle;
         _radius = radius;
         _entity = entity;
         _maskObs = maskObs;
+        _personalArea = personalArea;
     }
 
     public Vector3 GetDir(Vector3 currentDir, bool calculateY = true)
@@ -54,8 +56,23 @@ public class ObstacleAvoidance
         }
         else
         {
-            Vector3 newDir = (currentDir + (_entity.position - closetPoint).normalized).normalized;
-            return Vector3.Lerp(currentDir, newDir, (_radius - nearCollDistance) / _radius);
+            // Determinamos la posición relativa del punto más cercano en el obstáculo.
+            Vector3 relativePos = _entity.InverseTransformPoint(closetPoint);
+            Vector3 dirToClosestPoint = (closetPoint - _entity.position).normalized;
+
+            // Si el punto más cercano está a la izquierda del objeto, nos desplazamos hacia la derecha y viceversa.
+            Vector3 newDir;
+            if (relativePos.x < 0)
+            {
+                newDir = Vector3.Cross(_entity.up, dirToClosestPoint).normalized;
+            }
+            else
+            {
+                newDir = -Vector3.Cross(_entity.up, dirToClosestPoint).normalized;
+            }
+
+            //Lerp para que sea el cambio de direcciones mas suave. El personalArea servira para que se calcule la distancia, no hacia el punto medio del collider, sino a una distancia minima hacia la entidad.
+            return Vector3.Lerp(currentDir, newDir, (_radius - (Mathf.Clamp(nearCollDistance - _personalArea, 0, _radius))) / _radius);
         }
     }
 }
