@@ -23,7 +23,6 @@ public class PlayerStateWalk<T> : State<T>
         bool Mouse = Input.GetMouseButton(0);
         Vector3 dir = new Vector3(x, 0, z).normalized;
         _player.Move(dir);
-        _player.LookDir(dir);
 
         if (x == 0 && z == 0)
         {

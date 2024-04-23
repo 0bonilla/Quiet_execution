@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
     public float _totalChaseTime;
     public bool ACooldown;
     Rigidbody _rb;
+    [SerializeField] GameObject Daddy;
 
     private void Awake()
     {
@@ -40,11 +42,17 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Cooldown()
     {
-        print("Hola");
-        ACooldown = false;
-        yield return new WaitForSeconds(0.2f);
-        ACooldown = true;
-        print("Chau");
+        Daddy.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        Daddy.SetActive(false);
     }
     public int Life => life;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == 7)
+        {
+            life--;
+        }
+    }
 }

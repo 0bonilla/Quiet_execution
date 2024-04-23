@@ -8,7 +8,7 @@ public class EnemyContoller : MonoBehaviour
 
     #region Stats
     public float attackRange;
-    bool seen;
+    bool seen = false;
     bool chasing;
     Coroutine coroutine;
     #endregion
@@ -60,7 +60,7 @@ public class EnemyContoller : MonoBehaviour
         chase.AddTransition(StatesEnum.Dead, dead);
         chase.AddTransition(StatesEnum.Attack, attack);
 
-        _fsm = new FSM<StatesEnum>(chase);
+        _fsm = new FSM<StatesEnum>(idle);
     }
     void InitializeSteerings()
     {

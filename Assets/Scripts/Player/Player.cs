@@ -6,7 +6,10 @@ public class Player : MonoBehaviour, IPlayerModel
 {
     public float speed;
     [SerializeField] int life;
+    [SerializeField] float TotalCooldown;
+    public float AttackCooldown;
     Rigidbody _rb;
+    [SerializeField] GameObject Daddy;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -17,14 +20,35 @@ public class Player : MonoBehaviour, IPlayerModel
         dir.y = _rb.velocity.y;
         _rb.velocity = dir;
     }
-    public void LookDir(Vector3 dir)
-    {
-        if (dir.x == 0 && dir.z == 0) return;
-        transform.forward = dir;
+    public void LookDir()
+    {        
+        Vector3 mousePos = Input.mousePosition;
+        mousePos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.transform.position.y - transform.position.y));
+        Vector3 lookDirection = mousePos - transform.position;
+        lookDirection.y = 0; 
+        lookDirection.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(lookDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
     }
     public void Attack()
     {
-        Debug.Log("attack");
+        Debug.Log("PUM");
+        if(AttackCooldown > TotalCooldown)
+            StartCoroutine(PUM());
+    }
+    private IEnumerator PUM()
+    {
+        Daddy.SetActive(true);
+        AttackCooldown = 0;
+        yield return new WaitForSeconds(0.3f);
+        Daddy.SetActive(false);
     }
     public int Life => life;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 8)
+        {
+            life--;
+        }
+    }
 }

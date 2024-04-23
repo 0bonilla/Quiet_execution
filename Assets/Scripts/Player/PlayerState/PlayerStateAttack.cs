@@ -21,7 +21,7 @@ public class PlayerStateAttack<T> : State<T>
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         _player.Attack();
-        if (x != 0 || z != 0)
+        if (x == 0 || z == 0)
         {
             //Transition
             _fsm.Transition(_idleInput);

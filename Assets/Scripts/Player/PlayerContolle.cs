@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    IPlayerModel _player;
+    Player _player;
     IPlayerView _view;
 
     FSM<StatesEnum> _fsm;
     private void Awake()
     {
-        _player = GetComponent<IPlayerModel>();
+        _player = GetComponent<Player>();
         _view = GetComponent<IPlayerView>();
         InitializeFSM();
     }
@@ -37,9 +37,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         _fsm.OnUpdate();
-    }
-    public void ChangeModel(IPlayerModel model)
-    {
-        _player = model;
+        _player.LookDir();
+
+        _player.AttackCooldown += Time.deltaTime;
     }
 }
