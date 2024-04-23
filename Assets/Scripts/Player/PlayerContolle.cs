@@ -19,11 +19,18 @@ public class PlayerController : MonoBehaviour
     {
         _fsm = new FSM<StatesEnum>();
 
-        var idle = new PlayerStateIdle<StatesEnum>(StatesEnum.Walk);
-        var walk = new PlayerStateWalk<StatesEnum>(_player, _view, StatesEnum.Idle);
+        var idle = new PlayerStateIdle<StatesEnum>(StatesEnum.Walk, StatesEnum.Attack);
+        var walk = new PlayerStateWalk<StatesEnum>(_player, _view, StatesEnum.Idle, StatesEnum.Attack);
+        var attack = new PlayerStateAttack<StatesEnum>(_player, _view, StatesEnum.Idle, StatesEnum.Walk);
 
         idle.AddTransition(StatesEnum.Walk, walk);
+        idle.AddTransition(StatesEnum.Attack, attack);
+
+        attack.AddTransition(StatesEnum.Walk, walk);
+        attack.AddTransition(StatesEnum.Idle, idle);
+
         walk.AddTransition(StatesEnum.Idle, idle);
+        walk.AddTransition(StatesEnum.Attack, attack);
 
         _fsm.SetInit(idle);
     }

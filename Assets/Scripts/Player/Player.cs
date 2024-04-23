@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour, IPlayerModel
 {
     public float speed;
-
+    [SerializeField] int life;
     Rigidbody _rb;
     private void Awake()
     {
@@ -22,4 +22,9 @@ public class Player : MonoBehaviour, IPlayerModel
         if (dir.x == 0 && dir.z == 0) return;
         transform.forward = dir;
     }
+    public void Attack()
+    {
+        Debug.Log("attack");
+    }
+    public int Life => life;
 }
