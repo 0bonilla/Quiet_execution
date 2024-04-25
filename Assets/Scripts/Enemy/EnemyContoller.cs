@@ -23,6 +23,7 @@ public class EnemyContoller : MonoBehaviour
 
     ILineOfSight _los;
     ISteering _steering;
+    ISteering _pursuit;
     FSM<StatesEnum> _fsm;
     Enemy _model;
     ITreeNode _root; 
@@ -46,11 +47,13 @@ public class EnemyContoller : MonoBehaviour
         var idle = new EnemyIdleState<StatesEnum>();
         var dead = new EnemyDeadState<StatesEnum>(_model);
         var attack = new EnemyAttackState<StatesEnum>(_model);
-        var chase = new EnemyChaseState<StatesEnum>(_model, target.transform, _steering, _obstacleAvoidance);
+        var chase = new EnemyChaseState<StatesEnum>(_model, target.transform, _pursuit, _obstacleAvoidance);
+        var patrol = new EnemyPatrolState<StatesEnum>(_model, _steering, _obstacleAvoidance);
 
         idle.AddTransition(StatesEnum.Dead, dead);
         idle.AddTransition(StatesEnum.Attack, attack);
         idle.AddTransition(StatesEnum.Chase, chase);
+        idle.AddTransition(StatesEnum.Patrol, patrol);
 
         attack.AddTransition(StatesEnum.Idle, idle);
         attack.AddTransition(StatesEnum.Dead, dead);
@@ -64,11 +67,12 @@ public class EnemyContoller : MonoBehaviour
     }
     void InitializeSteerings()
     {
-        var seek = new Seek(_model.transform, target.transform);
+        var seek = new Seek(_model.transform, _model.waypoints[_model.currentWaypointIndex].transform);
+        var pursuit = new Pursuit(_model.transform, target, timePrediction);
         _steering = seek;
+        _pursuit = pursuit;
         _obstacleAvoidance = new ObstacleAvoidance(_model.transform, angle, radius, personalArea, maskObs);
     }
-
     void InitializedTree()
     {
         //Actions
@@ -76,11 +80,13 @@ public class EnemyContoller : MonoBehaviour
         var dead = new ActionNode(() => _fsm.Transition(StatesEnum.Dead));
         var attack = new ActionNode(() => _fsm.Transition(StatesEnum.Attack));
         var chase = new ActionNode(() => _fsm.Transition(StatesEnum.Chase));
+        var patrol = new ActionNode(() => _fsm.Transition(StatesEnum.Patrol));
 
         //Questions
-        var qKeepChaising = new QuestionNode(QuestionChaseTime, chase, idle);
         var qAttackRange = new QuestionNode(QuestionAttackRange, attack, chase);
-        var qLoS = new QuestionNode(QuestionLoS, qAttackRange, idle);
+        var qPatrol = new QuestionNode(QuestionPatrol, patrol, idle);
+        var qKeepChaising = new QuestionNode(QuestionChaseTime, chase, qPatrol);
+        var qLoS = new QuestionNode(QuestionLoS, qAttackRange, qPatrol);
         var qHasLife = new QuestionNode(() => _model.Life > 0, qLoS, dead);
 
         _root = qHasLife;
@@ -121,6 +127,10 @@ public class EnemyContoller : MonoBehaviour
         }
         seen = currLoS;
         return seen;
+    }
+    bool QuestionPatrol()
+    {
+        return true;
     }
     private void Update()
     {

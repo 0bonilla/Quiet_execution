@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 2206647130518157775}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.027, y: -0.1671, z: 0.649}
+  m_LocalScale: {x: 0.09440143, y: 0.09440143, z: 0.09440143}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2702895136087815945}
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5b2a505751e2f4383b31695a9b290d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 6786553174360277325, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
   attackRange: 1
   timePrediction: 1
   angle: 210

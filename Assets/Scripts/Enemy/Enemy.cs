@@ -14,6 +14,14 @@ public class Enemy : MonoBehaviour
     Rigidbody _rb;
     [SerializeField] GameObject Daddy;
 
+    public Transform[] waypoints; // Array to hold the patrol waypoints
+    public int currentWaypointIndex = 0; // Index of the current waypoint
+
+    [HideInInspector]
+    public bool isWaiting = false; // Flag to indicate if the enemy is currently waiting
+    public float waitDuration = 3f; // Duration of wait time in seconds
+    public float waiTimer;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -32,7 +40,7 @@ public class Enemy : MonoBehaviour
     public void LookDir(Vector3 dir)
     {
         if (dir.x == 0 && dir.z == 0) return;
-        transform.forward = dir;
+            transform.forward = dir;
     }
 
     public void Attack()
