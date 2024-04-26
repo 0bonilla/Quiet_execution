@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject Daddy;
 
     public Transform[] waypoints; // Array to hold the patrol waypoints
+    public Transform currentWaypoint;
     public int currentWaypointIndex = 0; // Index of the current waypoint
 
     [HideInInspector]
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        currentWaypoint = waypoints[currentWaypointIndex];
     }
     public void Dead()
     {
@@ -42,7 +44,21 @@ public class Enemy : MonoBehaviour
         if (dir.x == 0 && dir.z == 0) return;
             transform.forward = dir;
     }
-
+    public void CalculateDirection()
+    {
+        currentWaypoint = waypoints[currentWaypointIndex];
+    }
+    private void IncreaseWaypontIndex()
+    {
+        currentWaypointIndex++;
+        ResetTargetPoint();
+        currentWaypoint = waypoints[currentWaypointIndex];
+    }
+    private void ResetTargetPoint()
+    {
+        if (currentWaypointIndex >= waypoints.Length)
+            currentWaypointIndex = 0;
+    }
     public void Attack()
     {
         StartCoroutine(Cooldown());
@@ -61,6 +77,19 @@ public class Enemy : MonoBehaviour
         if(other.gameObject.layer == 7)
         {
             life--;
+        }
+        if (other.gameObject.CompareTag("PatrolPoint"))
+        {
+            waypoints[currentWaypointIndex].gameObject.SetActive(false);
+            if (currentWaypointIndex - 1 < 0)
+            {
+                waypoints[waypoints.Length - 1].gameObject.SetActive(true);
+            }
+            else
+            {
+                waypoints[currentWaypointIndex - 1].gameObject.SetActive(true);
+            }
+            IncreaseWaypontIndex();
         }
     }
 }

@@ -1179,7 +1179,7 @@ GameObject:
   - component: {fileID: 936522755}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: PatrolPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1199,9 +1199,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1354,7 +1354,7 @@ GameObject:
   - component: {fileID: 1223874225}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: PatrolPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1374,9 +1374,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2144,7 +2144,7 @@ GameObject:
   - component: {fileID: 2119240576}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: PatrolPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2164,9 +2164,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2467,6 +2467,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 356087209553328236, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
+      propertyPath: currentWaypoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 356087209553328236, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
       propertyPath: currentWaypointIndex
       value: 2
       objectReference: {fileID: 0}
@@ -2520,7 +2524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7615984489058206849, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 184.3
+      value: 184.1
       objectReference: {fileID: 0}
     - target: {fileID: 7615984489058206849, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
       propertyPath: m_LocalRotation.w

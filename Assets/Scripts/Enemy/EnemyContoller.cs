@@ -26,7 +26,7 @@ public class EnemyContoller : MonoBehaviour
     ISteering _pursuit;
     FSM<StatesEnum> _fsm;
     Enemy _model;
-    ITreeNode _root; 
+    ITreeNode _root;
     ObstacleAvoidance _obstacleAvoidance;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class EnemyContoller : MonoBehaviour
     {
         InitializeSteerings();
         InitializedTree();
-        InitializeFSM();  
+        InitializeFSM();
     }
 
     void InitializeFSM()
@@ -67,7 +67,7 @@ public class EnemyContoller : MonoBehaviour
     }
     void InitializeSteerings()
     {
-        var seek = new Seek(_model.transform, _model.waypoints[_model.currentWaypointIndex].transform);
+        var seek = new Seek(_model,_model.transform, _model.currentWaypoint);
         var pursuit = new Pursuit(_model.transform, target, timePrediction);
         _steering = seek;
         _pursuit = pursuit;
@@ -85,7 +85,7 @@ public class EnemyContoller : MonoBehaviour
         //Questions
         var qAttackRange = new QuestionNode(QuestionAttackRange, attack, chase);
         var qPatrol = new QuestionNode(QuestionPatrol, patrol, idle);
-        var qKeepChaising = new QuestionNode(QuestionChaseTime, chase, qPatrol);
+        var qKeepChaising = new QuestionNode(QuestionChaseTime, chase, idle);
         var qLoS = new QuestionNode(QuestionLoS, qAttackRange, qPatrol);
         var qHasLife = new QuestionNode(() => _model.Life > 0, qLoS, dead);
 
