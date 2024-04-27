@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, IPlayerModel
     public float AttackCooldown;
     Rigidbody _rb;
     [SerializeField] GameObject Daddy;
+    public bool dead;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour, IPlayerModel
     {
         if (other.gameObject.layer == 8)
         {
+            dead = true;
             life--;
         }
     }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9184709507734246742}
   - component: {fileID: 8919525296661505848}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -204,8 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5b2a505751e2f4383b31695a9b290d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 6786553174360277325, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
-  attackRange: 1
+  target: {fileID: 0}
+  attackRange: 4
   timePrediction: 1
   angle: 210
   radius: 5
@@ -245,9 +245,19 @@ MonoBehaviour:
   life: 1
   speed: 20
   _chaseTime: 4
-  _totalChaseTime: 3
+  _totalChaseTime: 2
   ACooldown: 1
   Daddy: {fileID: 2206647130518157775}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentWayPoint: {fileID: 0}
+  currentWaypointIndex: 2
+  index: 0
+  isWaiting: 0
+  waitDuration: 5
+  waiTimer: 0
 --- !u!114 &5595018863029035419
 MonoBehaviour:
   m_ObjectHideFlags: 0

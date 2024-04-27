@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,8 +16,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject Daddy;
 
     public Transform[] waypoints; // Array to hold the patrol waypoints
-    public Transform currentWaypoint;
+    public Transform currentWayPoint;
     public int currentWaypointIndex = 0; // Index of the current waypoint
+    public int index;
 
     [HideInInspector]
     public bool isWaiting = false; // Flag to indicate if the enemy is currently waiting
@@ -26,7 +28,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        currentWaypoint = waypoints[currentWaypointIndex];
+        currentWayPoint = waypoints[currentWaypointIndex];
     }
     public void Dead()
     {
@@ -46,19 +48,28 @@ public class Enemy : MonoBehaviour
     }
     public void CalculateDirection()
     {
-        currentWaypoint = waypoints[currentWaypointIndex];
+        Dictionary<string, float> dict = new Dictionary<string, float>();
+        currentWayPoint = waypoints[currentWaypointIndex];
     }
     private void IncreaseWaypontIndex()
     {
-        currentWaypointIndex++;
-        ResetTargetPoint();
-        currentWaypoint = waypoints[currentWaypointIndex];
-    }
-    private void ResetTargetPoint()
-    {
-        if (currentWaypointIndex >= waypoints.Length)
+        currentWaypointIndex = MyRandoms.RangeRandom(0, waypoints.Length);
+        if(index == currentWaypointIndex)
+        {
+            currentWaypointIndex++;
+        }
+        if (currentWaypointIndex == waypoints.Length)
+        {
             currentWaypointIndex = 0;
+        }
+        //ResetTargetPoint();
+        currentWayPoint = waypoints[currentWaypointIndex];
     }
+    //private void ResetTargetPoint()
+    //{
+    //    if (currentWaypointIndex >= waypoints.Length)
+    //        currentWaypointIndex = 0;
+    //}
     public void Attack()
     {
         StartCoroutine(Cooldown());
@@ -80,15 +91,7 @@ public class Enemy : MonoBehaviour
         }
         if (other.gameObject.CompareTag("PatrolPoint"))
         {
-            waypoints[currentWaypointIndex].gameObject.SetActive(false);
-            if (currentWaypointIndex - 1 < 0)
-            {
-                waypoints[waypoints.Length - 1].gameObject.SetActive(true);
-            }
-            else
-            {
-                waypoints[currentWaypointIndex - 1].gameObject.SetActive(true);
-            }
+            index = currentWaypointIndex;
             IncreaseWaypontIndex();
         }
     }

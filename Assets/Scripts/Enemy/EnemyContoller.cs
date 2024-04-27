@@ -58,16 +58,24 @@ public class EnemyContoller : MonoBehaviour
         attack.AddTransition(StatesEnum.Idle, idle);
         attack.AddTransition(StatesEnum.Dead, dead);
         attack.AddTransition(StatesEnum.Chase, chase);
+        attack.AddTransition(StatesEnum.Patrol, patrol);
 
         chase.AddTransition(StatesEnum.Idle, idle);
         chase.AddTransition(StatesEnum.Dead, dead);
         chase.AddTransition(StatesEnum.Attack, attack);
+        chase.AddTransition(StatesEnum.Patrol, patrol);
+
+        patrol.AddTransition(StatesEnum.Idle, idle);
+        patrol.AddTransition(StatesEnum.Dead, dead);
+        patrol.AddTransition(StatesEnum.Attack, attack);
+        patrol.AddTransition(StatesEnum.Chase, chase);
+
 
         _fsm = new FSM<StatesEnum>(idle);
     }
     void InitializeSteerings()
     {
-        var seek = new Seek(_model,_model.transform, _model.currentWaypoint);
+        var seek = new Seek(_model,_model.transform, _model.currentWayPoint);
         var pursuit = new Pursuit(_model.transform, target, timePrediction);
         _steering = seek;
         _pursuit = pursuit;

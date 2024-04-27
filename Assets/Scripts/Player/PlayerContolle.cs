@@ -36,9 +36,11 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        _fsm.OnUpdate();
-        _player.LookDir();
-
-        _player.AttackCooldown += Time.deltaTime;
+        if (!_player.dead)
+        {
+            _fsm.OnUpdate();
+            _player.LookDir();
+            _player.AttackCooldown += Time.deltaTime;
+        }
     }
 }

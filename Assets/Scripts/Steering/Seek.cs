@@ -19,7 +19,7 @@ public class Seek : ISteering
     {
         //a: entity;
         //b: _target;
-        _target = _model.currentWaypoint;
+        _target = _model.currentWayPoint;
         return (_target.position - _entity.position).normalized;
     }
 }
