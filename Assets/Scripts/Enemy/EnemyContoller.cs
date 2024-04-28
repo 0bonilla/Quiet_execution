@@ -138,7 +138,11 @@ public class EnemyContoller : MonoBehaviour
     }
     bool QuestionPatrol()
     {
-        return true;
+        if (_model.waypoints.Length == 0)
+        {
+            return false;
+        }
+        else return true;
     }
     private void Update()
     {
