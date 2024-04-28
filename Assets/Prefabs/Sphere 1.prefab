@@ -351,11 +351,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c218e4a596384ab4283218ebf1433ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 20
   life: 1
   TotalCooldown: 0.8
   AttackCooldown: 0
   Daddy: {fileID: 5453597435469289586}
+  dead: 0
 --- !u!114 &3823841399205002715
 MonoBehaviour:
   m_ObjectHideFlags: 0
