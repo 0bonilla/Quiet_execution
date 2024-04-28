@@ -28,7 +28,6 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        currentWayPoint = waypoints[currentWaypointIndex];
     }
     public void Dead()
     {
