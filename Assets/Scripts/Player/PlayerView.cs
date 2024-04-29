@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour, IPlayerView
 {
     public GameObject body;
-    public Animator anim;
-    Rigidbody _rb;
+    private RandomMaterial randomMaterial;
     protected virtual void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        randomMaterial = GetComponent<RandomMaterial>();
     }
-    private void Update()
+    private void Start()
     {
-        //anim.SetFloat("Vel", _rb.velocity.magnitude);
+        randomMaterial.SetRandomMaterial();
     }
 }

@@ -75,6 +75,7 @@ public class EnemyContoller : MonoBehaviour
     }
     void InitializeSteerings()
     {
+        //Utilizamos seek para el patruyaje y pursuit para perseguir al jugador
         var seek = new Seek(_model,_model.transform, _model.currentWayPoint);
         var pursuit = new Pursuit(_model.transform, target, timePrediction);
         _steering = seek;
@@ -93,19 +94,14 @@ public class EnemyContoller : MonoBehaviour
         //Questions
         var qAttackRange = new QuestionNode(QuestionAttackRange, attack, chase);
         var qPatrol = new QuestionNode(QuestionPatrol, patrol, idle);
-        var qKeepChaising = new QuestionNode(QuestionChaseTime, chase, idle);
         var qLoS = new QuestionNode(QuestionLoS, qAttackRange, qPatrol);
         var qHasLife = new QuestionNode(() => _model.Life > 0, qLoS, dead);
 
         _root = qHasLife;
     }
-    bool QuestionChaseTime()
-    {
-        StartCoroutine(ChaseTime());
-        return chasing;
-    }
     IEnumerator ChaseTime()
     {
+        // Seguir al jugador segundos despues de dejar de verlo
         Debug.Log("Sigo");
         yield return new WaitForSeconds(_model._totalChaseTime);
         Debug.Log("dejo de seguir");
@@ -116,10 +112,14 @@ public class EnemyContoller : MonoBehaviour
         return _los.CheckRange(target.transform, attackRange);
     }
     bool QuestionLoS()
-    {       
+    {
+        // verificamos si el enemigo nos puede ver.
         var currLoS = _los.CheckRange(target.transform)
                     && _los.CheckAngle(target.transform)
                     && _los.CheckView(target.transform);
+
+        /* Utilizamos corrutinas para poder lograr que el enemigo te persiga   
+            despues de cierto tiempo */
         if (currLoS == false && seen == true)
         {
             if (coroutine == null)
@@ -138,6 +138,7 @@ public class EnemyContoller : MonoBehaviour
     }
     bool QuestionPatrol()
     {
+        // preguntamos si tiene patrullaje
         if (_model.waypoints.Length == 0)
         {
             return false;

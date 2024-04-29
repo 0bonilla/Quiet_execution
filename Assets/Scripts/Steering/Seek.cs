@@ -19,6 +19,7 @@ public class Seek : ISteering
     {
         //a: entity;
         //b: _target;
+        //Se utiliza para el patrullaje
         _target = _model.currentWayPoint;
         return (_target.position - _entity.position).normalized;
     }

@@ -2935,7 +2935,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 32ad94a412ad7674dbe1c16055319bf8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.499
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4360,6 +4360,30 @@ PrefabInstance:
     - target: {fileID: 957308844522470890, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
       propertyPath: m_Name
       value: Sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680622935720239927, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
+      propertyPath: bodyMateral
+      value: 
+      objectReference: {fileID: 2100000, guid: e9373bf9d21deb14aaf8b8bf513ee7db, type: 2}
+    - target: {fileID: 4680622935720239927, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
+      propertyPath: materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 309566318eb66de4ba5de557bac692ec, type: 2}
+    - target: {fileID: 4680622935720239927, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
+      propertyPath: materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a5da42a70bd4b144ac677f78c935bad, type: 2}
+    - target: {fileID: 4680622935720239927, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
+      propertyPath: materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0656e6df600cff447841258b6e3bff0e, type: 2}
+    - target: {fileID: 4680622935720239927, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
+      propertyPath: rarityMaterials.Array.data[0].rarity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680622935720239927, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
+      propertyPath: rarityMaterials.Array.data[1].rarity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8487436481156870822, guid: 86aae84ccc91e8d479cadf0ea7b91ed7, type: 3}
       propertyPath: m_LocalPosition.x

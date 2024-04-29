@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     public float _totalChaseTime;
     public bool ACooldown;
     Rigidbody _rb;
-    [SerializeField] GameObject Daddy;
+    [SerializeField] GameObject _punch;
 
     public Transform[] waypoints; // Array to hold the patrol waypoints
     public Transform currentWayPoint;
@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     public bool isWaiting = false; // Flag to indicate if the enemy is currently waiting
     public float waitDuration = 3f; // Duration of wait time in seconds
     public float waiTimer;
+
+    public List<RarityInfo> rarityInfo;
 
     private void Awake()
     {
@@ -47,13 +49,13 @@ public class Enemy : MonoBehaviour
     }
     public void CalculateDirection()
     {
-        Dictionary<string, float> dict = new Dictionary<string, float>();
         currentWayPoint = waypoints[currentWaypointIndex];
     }
     private void IncreaseWaypontIndex()
     {
+        //Se randomiza el currentWaypointIndex de manera controlada
         currentWaypointIndex = MyRandoms.RangeRandom(0, waypoints.Length);
-        if(index == currentWaypointIndex)
+        if (index == currentWaypointIndex)
         {
             currentWaypointIndex++;
         }
@@ -61,14 +63,9 @@ public class Enemy : MonoBehaviour
         {
             currentWaypointIndex = 0;
         }
-        //ResetTargetPoint();
         currentWayPoint = waypoints[currentWaypointIndex];
+
     }
-    //private void ResetTargetPoint()
-    //{
-    //    if (currentWaypointIndex >= waypoints.Length)
-    //        currentWaypointIndex = 0;
-    //}
     public void Attack()
     {
         StartCoroutine(Cooldown());
@@ -76,9 +73,9 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Cooldown()
     {
-        Daddy.SetActive(true);
+        _punch.SetActive(true);
         yield return new WaitForSeconds(0.3f);
-        Daddy.SetActive(false);
+        _punch.SetActive(false);
     }
     public int Life => life;
 
@@ -88,6 +85,7 @@ public class Enemy : MonoBehaviour
         {
             life--;
         }
+        // Una vez que nuestro enemigo colisiona con un punto de paatrullaje este pasa al siguiente
         if (other.gameObject.CompareTag("PatrolPoint"))
         {
             index = currentWaypointIndex;
