@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 90286266657021130}
-  offset: {x: 0, y: 45, z: 0}
+  offset: {x: 0, y: 50, z: 0}
   smoothFactor: 4
 --- !u!4 &689871926 stripped
 Transform:
