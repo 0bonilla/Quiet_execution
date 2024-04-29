@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Camara persigue al jugador
         following();
     }
 

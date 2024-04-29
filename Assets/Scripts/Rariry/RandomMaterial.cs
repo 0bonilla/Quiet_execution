@@ -15,7 +15,7 @@ public class RandomMaterial : MonoBehaviour
         myMaterial = GetComponent<MeshRenderer>();
         _weight = new Dictionary<RariryEnum, int>();
 
-        for (int i = 0; i < _weight.Count; i++)
+        for (int i = 0; i < rarityMaterials.Count; i++)
         {
             _weight[rarityMaterials[i].rarity] = rarityMaterials[i].weight;
         }

@@ -12,6 +12,7 @@ public class PlayerView : MonoBehaviour, IPlayerView
     }
     private void Start()
     {
+        // Randomizado skin
         randomMaterial.SetRandomMaterial();
     }
 }

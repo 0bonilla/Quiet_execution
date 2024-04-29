@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 957308844522470890}
-  anim: {fileID: 0}
 --- !u!114 &4680622935720239927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,17 +196,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rarityMaterials:
-  - rarity: 3
-    weight: 50
-  - rarity: 2
-    weight: 40
   - rarity: 0
+    weight: 50
+  - rarity: 1
+    weight: 40
+  - rarity: 2
     weight: 10
-  bodyMateral: {fileID: 0}
+  bodyMateral: {fileID: 2100000, guid: e9373bf9d21deb14aaf8b8bf513ee7db, type: 2}
   materials:
-  - {fileID: 2100000, guid: 0d41f797b5082354eb20b947651c04e1, type: 2}
-  - {fileID: 2100000, guid: e9373bf9d21deb14aaf8b8bf513ee7db, type: 2}
-  - {fileID: 2100000, guid: f8461be3f40f50048b04c577afaa675b, type: 2}
+  - {fileID: 2100000, guid: 309566318eb66de4ba5de557bac692ec, type: 2}
+  - {fileID: 2100000, guid: 9a5da42a70bd4b144ac677f78c935bad, type: 2}
+  - {fileID: 2100000, guid: 0656e6df600cff447841258b6e3bff0e, type: 2}
 --- !u!1 &3273808546038000392
 GameObject:
   m_ObjectHideFlags: 0

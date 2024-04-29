@@ -22,7 +22,8 @@ public class Player : MonoBehaviour, IPlayerModel
         _rb.velocity = dir;
     }
     public void LookDir()
-    {        
+    {     
+        // Utilizar la posicion del mouse como rotación
         Vector3 mousePos = Input.mousePosition;
         mousePos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.transform.position.y - transform.position.y));
         Vector3 lookDirection = mousePos - transform.position;
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour, IPlayerModel
     }
     public void Attack()
     {
-        Debug.Log("PUM");
+        //Metodo de ataque
         if(AttackCooldown > TotalCooldown)
             StartCoroutine(PUM());
     }

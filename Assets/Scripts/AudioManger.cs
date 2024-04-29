@@ -6,6 +6,7 @@ public class AudioManger : MonoBehaviour
 {
     public AudioSource musicSource; 
 
+    // Inicia la musica
     void Start()
     {     
         musicSource.Play();

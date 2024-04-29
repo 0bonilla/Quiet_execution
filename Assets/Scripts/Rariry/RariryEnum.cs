@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum RariryEnum
 {
-    UR,
+    C,
     R,
-    C
+    UR
 }

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        // verifico si el jugador esta muerto y le cancelo los inputs
         if (!_player.dead)
         {
             _fsm.OnUpdate();

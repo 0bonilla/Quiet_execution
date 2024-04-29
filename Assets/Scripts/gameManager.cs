@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // reset del nivel
         if ((_player.dead && Input.anyKey) || Input.GetKeyDown(KeyCode.R))
         {
             Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
