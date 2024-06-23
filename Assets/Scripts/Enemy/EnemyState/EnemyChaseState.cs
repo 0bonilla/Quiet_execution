@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class EnemyChaseState<T> : State<T>
 {
-    ISteering _pursuit;
+    ISteering _steering;
     Enemy _model;
     ObstacleAvoidance _obs;
     Transform _target;
-    public EnemyChaseState(Enemy model,Transform target, ISteering pursuit, ObstacleAvoidance obs)
+    public EnemyChaseState(Enemy model,Transform target, ISteering steering, ObstacleAvoidance obs)
     {
-        _pursuit = pursuit;
+        _steering = steering;
         _model = model;
         _obs = obs;
         _target = target;
     }
     public override void Execute()
     {
-        var dir = _obs.GetDir(_pursuit.GetDir(), false);
+        var dir = _obs.GetDir(_steering.GetDir(), false);
         _model.Move(_model.transform.forward);
         _model.LookDir(dir);
     }

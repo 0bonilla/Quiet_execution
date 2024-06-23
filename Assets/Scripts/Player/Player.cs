@@ -23,14 +23,14 @@ public class Player : MonoBehaviour, IPlayerModel
     }
     public void LookDir()
     {     
-        // Utilizar la posicion del mouse como rotación
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.transform.position.y - transform.position.y));
-        Vector3 lookDirection = mousePos - transform.position;
-        lookDirection.y = 0; 
-        lookDirection.Normalize();
-        Quaternion rotation = Quaternion.LookRotation(lookDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
+        //// Utilizar la posicion del mouse como rotación
+        //Vector3 mousePos = Input.mousePosition;
+        //mousePos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.transform.position.y - transform.position.y));
+        //Vector3 lookDirection = mousePos - transform.position;
+        //lookDirection.y = 0; 
+        //lookDirection.Normalize();
+        //Quaternion rotation = Quaternion.LookRotation(lookDirection);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
     }
     public void Attack()
     {

@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         {
             _fsm.OnUpdate();
             _player.LookDir();
-            _player.AttackCooldown += Time.deltaTime;
+            _player.AttackCooldown += Time.deltaTime; //comportamiento que determina el estado
         }
     }
 }

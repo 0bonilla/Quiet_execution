@@ -56,23 +56,19 @@ public class ObstacleAvoidance
         }
         else
         {
-            // Determinamos la posición relativa del punto más cercano en el obstáculo.
+            //Vector3 newDir = (currentDir + (_entity.position - closetPoint).normalized).normalized;
             Vector3 relativePos = _entity.InverseTransformPoint(closetPoint);
-            Vector3 dirToClosestPoint = (closetPoint - _entity.position).normalized;
-
-            // Si el punto más cercano está a la izquierda del objeto, nos desplazamos hacia la derecha y viceversa.
+            Vector3 dirToClosetPoint = (closetPoint - _entity.position).normalized;
             Vector3 newDir;
             if (relativePos.x < 0)
             {
-                newDir = Vector3.Cross(_entity.up, dirToClosestPoint).normalized;
+                newDir = Vector3.Cross(_entity.up, dirToClosetPoint);
             }
             else
             {
-                newDir = -Vector3.Cross(_entity.up, dirToClosestPoint).normalized;
+                newDir = -Vector3.Cross(_entity.up, dirToClosetPoint);
             }
-
-            //Lerp para que sea el cambio de direcciones mas suave. El personalArea servira para que se calcule la distancia, no hacia el punto medio del collider, sino a una distancia minima hacia la entidad.
-            return Vector3.Lerp(currentDir, newDir, (_radius - (Mathf.Clamp(nearCollDistance - _personalArea, 0, _radius))) / _radius);
+            return Vector3.Lerp(currentDir, newDir, (_radius - Mathf.Clamp(nearCollDistance - _personalArea, 0, _radius)) / _radius);
         }
     }
 }

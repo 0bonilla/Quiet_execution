@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IBoid
 {
     [SerializeField] int life;
     [SerializeField] float speed;
@@ -25,11 +25,14 @@ public class Enemy : MonoBehaviour
     public float waitDuration = 3f; // Duration of wait time in seconds
     public float waiTimer;
 
+    LeaderBehaviour _leaderTarget;
+
     public List<RarityInfo> rarityInfo;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _leaderTarget = GetComponent<LeaderBehaviour>();
     }
     public void Dead()
     {
@@ -47,7 +50,11 @@ public class Enemy : MonoBehaviour
         if (dir.x == 0 && dir.z == 0) return;
             transform.forward = dir;
     }
-    public void CalculateDirection()
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+    public void CalculateDirection() // todo lo que tiene que ver con los waypoints va a controller
     {
         currentWayPoint = waypoints[currentWaypointIndex];
     }
@@ -92,4 +99,7 @@ public class Enemy : MonoBehaviour
             IncreaseWaypontIndex();
         }
     }
+
+    public Vector3 Position => transform.position;
+    public Vector3 Front => transform.forward;
 }

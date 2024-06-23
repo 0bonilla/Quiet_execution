@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyContoller : MonoBehaviour
 {
-    public Rigidbody target;
+    public Transform target;
 
     #region Stats
     public float attackRange;
@@ -29,6 +29,9 @@ public class EnemyContoller : MonoBehaviour
     ITreeNode _root;
     ObstacleAvoidance _obstacleAvoidance;
 
+    EnemyPatrolState<StatesEnum> _stateFollowPoints;
+    [SerializeField] AgentController _agentController;
+
     private void Awake()
     {
         _model = GetComponent<Enemy>();
@@ -40,6 +43,7 @@ public class EnemyContoller : MonoBehaviour
         InitializeSteerings();
         InitializedTree();
         InitializeFSM();
+        _agentController.RunAStar();
     }
 
     void InitializeFSM()
@@ -47,28 +51,29 @@ public class EnemyContoller : MonoBehaviour
         var idle = new EnemyIdleState<StatesEnum>();
         var dead = new EnemyDeadState<StatesEnum>(_model);
         var attack = new EnemyAttackState<StatesEnum>(_model);
-        var chase = new EnemyChaseState<StatesEnum>(_model, target.transform, _pursuit, _obstacleAvoidance);
-        var patrol = new EnemyPatrolState<StatesEnum>(_model, _steering, _obstacleAvoidance);
+        var chase = new EnemyChaseState<StatesEnum>(_model, target.transform, _steering, _obstacleAvoidance);
+        //var patrol = new EnemyPatrolState<StatesEnum>(_model, _steering, _obstacleAvoidance);
+        _stateFollowPoints = new EnemyPatrolState<StatesEnum>(_model);
 
         idle.AddTransition(StatesEnum.Dead, dead);
         idle.AddTransition(StatesEnum.Attack, attack);
         idle.AddTransition(StatesEnum.Chase, chase);
-        idle.AddTransition(StatesEnum.Patrol, patrol);
+        idle.AddTransition(StatesEnum.Patrol, _stateFollowPoints);
 
         attack.AddTransition(StatesEnum.Idle, idle);
         attack.AddTransition(StatesEnum.Dead, dead);
         attack.AddTransition(StatesEnum.Chase, chase);
-        attack.AddTransition(StatesEnum.Patrol, patrol);
+        attack.AddTransition(StatesEnum.Patrol, _stateFollowPoints);
 
         chase.AddTransition(StatesEnum.Idle, idle);
         chase.AddTransition(StatesEnum.Dead, dead);
         chase.AddTransition(StatesEnum.Attack, attack);
-        chase.AddTransition(StatesEnum.Patrol, patrol);
+        chase.AddTransition(StatesEnum.Patrol, _stateFollowPoints);
 
-        patrol.AddTransition(StatesEnum.Idle, idle);
-        patrol.AddTransition(StatesEnum.Dead, dead);
-        patrol.AddTransition(StatesEnum.Attack, attack);
-        patrol.AddTransition(StatesEnum.Chase, chase);
+        _stateFollowPoints.AddTransition(StatesEnum.Idle, idle);
+        _stateFollowPoints.AddTransition(StatesEnum.Dead, dead);
+        _stateFollowPoints.AddTransition(StatesEnum.Attack, attack);
+        _stateFollowPoints.AddTransition(StatesEnum.Chase, chase);
 
 
         _fsm = new FSM<StatesEnum>(idle);
@@ -76,10 +81,11 @@ public class EnemyContoller : MonoBehaviour
     void InitializeSteerings()
     {
         //Utilizamos seek para el patruyaje y pursuit para perseguir al jugador
-        var seek = new Seek(_model,_model.transform, _model.currentWayPoint);
-        var pursuit = new Pursuit(_model.transform, target, timePrediction);
-        _steering = seek;
-        _pursuit = pursuit;
+        //var seek = new Seek(_model,_model.transform, _model.currentWayPoint);
+        //var pursuit = new Pursuit(_model.transform, target, timePrediction);
+        //_steering = seek;
+        //_pursuit = pursuit;
+        _steering = GetComponent<FlockingManager>();
         _obstacleAvoidance = new ObstacleAvoidance(_model.transform, angle, radius, personalArea, maskObs);
     }
     void InitializedTree()
@@ -150,4 +156,6 @@ public class EnemyContoller : MonoBehaviour
         _fsm.OnUpdate();
         _root.Execute();
     }
+
+    public IPoints GetStateWaypoints => _stateFollowPoints;
 }

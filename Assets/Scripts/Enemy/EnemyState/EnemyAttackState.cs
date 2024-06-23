@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyAttackState<T> : State<T>
 {
-
     Enemy _model;
 
     public EnemyAttackState(Enemy model)
