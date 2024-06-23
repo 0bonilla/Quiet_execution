@@ -16,7 +16,6 @@ public class AStar
         cost[start] = 0;
         while (!pending.IsEmpty)
         {
-            Debug.Log("AStar");
             watchdog--;
             if (watchdog <= 0) break;
             T current = pending.Dequeue();

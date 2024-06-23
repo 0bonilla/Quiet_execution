@@ -17,10 +17,11 @@ public class Seek : ISteering
 
     public Vector3 GetDir()
     {
-        //a: entity;
-        //b: _target;
-        //Se utiliza para el patrullaje
-        _target = _model.currentWayPoint;
-        return (_target.position - _entity.position).normalized;
+        //    //a: entity;
+        //    //b: _target;
+        //    //Se utiliza para el patrullaje
+        //    _target = _model.currentWayPoint;
+        //    return (_target.position - _entity.position).normalized;
+        return new Vector3(0,0,0);
     }
 }

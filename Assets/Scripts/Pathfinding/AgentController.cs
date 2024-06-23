@@ -10,15 +10,14 @@ public class AgentController : MonoBehaviour
     public LayerMask maskNodes;
     public LayerMask maskObs;
     public Box box;
-    public Transform target;
+    public Node target;
     public void RunAStar()
     {
         var start = GetNearNode(enemy.transform.position);
         if (start == null) return;
         List<Node> path = AStar.Run(start, GetConnections, IsSatiesfies, GetCost, Heuristic);
-        Debug.Log(path.Count);
         enemy.GetStateWaypoints.SetWayPoints(path);
-        //box.SetWayPoints(path);
+        box.SetWayPoints(path);
     }
     float Heuristic(Node current)
     {
@@ -33,10 +32,6 @@ public class AgentController : MonoBehaviour
         float multiplierDistance = 1;
         float multiplierTrap = 200;
         cost += Vector3.Distance(parent.transform.position, child.transform.position) * multiplierDistance;
-        if (child.hasTrap)
-        {
-            cost += multiplierTrap;
-        }
         return cost;
     }
     Node GetNearNode(Vector3 pos)

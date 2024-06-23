@@ -15,8 +15,8 @@ public class Enemy : MonoBehaviour, IBoid
     Rigidbody _rb;
     [SerializeField] GameObject _punch;
 
-    public Transform[] waypoints; // Array to hold the patrol waypoints
-    public Transform currentWayPoint;
+    public Node[] waypoints; // Array to hold the patrol waypoints
+    public Node currentWayPoint;
     public int currentWaypointIndex = 0; // Index of the current waypoint
     public int index;
 
@@ -54,25 +54,6 @@ public class Enemy : MonoBehaviour, IBoid
     {
         transform.position = pos;
     }
-    public void CalculateDirection() // todo lo que tiene que ver con los waypoints va a controller
-    {
-        currentWayPoint = waypoints[currentWaypointIndex];
-    }
-    private void IncreaseWaypontIndex()
-    {
-        //Se randomiza el currentWaypointIndex de manera controlada
-        currentWaypointIndex = MyRandoms.RangeRandom(0, waypoints.Length);
-        if (index == currentWaypointIndex)
-        {
-            currentWaypointIndex++;
-        }
-        if (currentWaypointIndex == waypoints.Length)
-        {
-            currentWaypointIndex = 0;
-        }
-        currentWayPoint = waypoints[currentWaypointIndex];
-
-    }
     public void Attack()
     {
         StartCoroutine(Cooldown());
@@ -91,12 +72,6 @@ public class Enemy : MonoBehaviour, IBoid
         if(other.gameObject.layer == 7)
         {
             life--;
-        }
-        // Una vez que nuestro enemigo colisiona con un punto de paatrullaje este pasa al siguiente
-        if (other.gameObject.CompareTag("PatrolPoint"))
-        {
-            index = currentWaypointIndex;
-            IncreaseWaypontIndex();
         }
     }
 

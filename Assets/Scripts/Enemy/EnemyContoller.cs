@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class EnemyContoller : MonoBehaviour
@@ -52,7 +54,6 @@ public class EnemyContoller : MonoBehaviour
         var dead = new EnemyDeadState<StatesEnum>(_model);
         var attack = new EnemyAttackState<StatesEnum>(_model);
         var chase = new EnemyChaseState<StatesEnum>(_model, target.transform, _steering, _obstacleAvoidance);
-        //var patrol = new EnemyPatrolState<StatesEnum>(_model, _steering, _obstacleAvoidance);
         _stateFollowPoints = new EnemyPatrolState<StatesEnum>(_model);
 
         idle.AddTransition(StatesEnum.Dead, dead);
@@ -151,11 +152,35 @@ public class EnemyContoller : MonoBehaviour
         }
         else return true;
     }
+    private void IncreaseWaypontIndex()
+    {
+        //Se randomiza el currentWaypointIndex de manera controlada
+        _model.currentWaypointIndex = MyRandoms.RangeRandom(0, _model.waypoints.Length);
+        if (_model.index == _model.currentWaypointIndex)
+        {
+            _model.currentWaypointIndex++;
+        }
+        if (_model.currentWaypointIndex == _model.waypoints.Length)
+        {
+            _model.currentWaypointIndex = 0;
+        }
+        _model.currentWayPoint = _model.waypoints[_model.currentWaypointIndex];
+        _agentController.target = _model.currentWayPoint;
+    }
     private void Update()
     {
         _fsm.OnUpdate();
         _root.Execute();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Box")
+        {
+            _model.index = _model.currentWaypointIndex;
+            IncreaseWaypontIndex();
+            _agentController.RunAStar();
+        }
+    }
     public IPoints GetStateWaypoints => _stateFollowPoints;
 }

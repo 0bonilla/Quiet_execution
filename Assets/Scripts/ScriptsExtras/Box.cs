@@ -21,10 +21,4 @@ public class Box : MonoBehaviour, IPoints
         pos.y = transform.position.y;
         transform.position = pos;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        var character = other.GetComponent<Enemy>();
-        if (character)
-            obj.SetActive(false);
-    }
 }

@@ -9,25 +9,6 @@ using static UnityEditor.PlayerSettings;
 
 public class EnemyPatrolState<T> : State<T>, IPoints
 {
-    //Enemy _model;
-    //ISteering _steering;
-    //ObstacleAvoidance _obs;
-
-    //public EnemyPatrolState(Enemy model, ISteering steering, ObstacleAvoidance obs)
-    //{
-    //    _model = model;
-    //    _obs = obs;
-    //    _steering = steering;
-    //}
-
-    //public override void Execute()
-    //{
-    //    _model.CalculateDirection();
-    //    var dir = _obs.GetDir(_steering.GetDir(), false);
-    //    _model.Move(_model.transform.forward);
-    //    _model.LookDir(dir);
-    //}
-
     Enemy _model;
     List<Vector3> _waypoints;
     int _nextPoint = 0;

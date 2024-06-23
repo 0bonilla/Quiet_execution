@@ -303,6 +303,7 @@ MonoBehaviour:
   maskObs:
     serializedVersion: 2
     m_Bits: 64
+  _agentController: {fileID: 0}
 --- !u!114 &8638213016213476906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676deb6abb425c6419491c2b5d74eb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 60
+  range: 15.02
   angle: 60
   maskObs:
     serializedVersion: 2
@@ -339,6 +340,7 @@ MonoBehaviour:
   ACooldown: 1
   _punch: {fileID: 2206647130518157775}
   waypoints:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -431,9 +433,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b5363e0bedbca40a4fc2d56222260c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 0
+  multiplier: 1
   target: {fileID: 0}
-  isActive: 0
+  isActive: 1
 --- !u!114 &5394517632890858082
 MonoBehaviour:
   m_ObjectHideFlags: 0
