@@ -25,17 +25,16 @@ public class Enemy : MonoBehaviour, IBoid
     public float waitDuration = 3f; // Duration of wait time in seconds
     public float waiTimer;
 
-    LeaderBehaviour _leaderTarget;
-
-    public List<RarityInfo> rarityInfo;
+    public RandomItem UpgradeRarity;
 
     private void Awake()
     {
+        UpgradeRarity = FindObjectOfType<RandomItem>();
         _rb = GetComponent<Rigidbody>();
-        _leaderTarget = GetComponent<LeaderBehaviour>();
     }
     public void Dead()
     {
+        UpgradeRarity.LessRare();
         Destroy(gameObject);
     }
 
@@ -54,6 +53,7 @@ public class Enemy : MonoBehaviour, IBoid
     {
         transform.position = pos;
     }
+
     public void Attack()
     {
         StartCoroutine(Cooldown());
@@ -74,7 +74,6 @@ public class Enemy : MonoBehaviour, IBoid
             life--;
         }
     }
-
     public Vector3 Position => transform.position;
     public Vector3 Front => transform.forward;
 }

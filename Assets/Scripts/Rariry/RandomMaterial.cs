@@ -20,6 +20,10 @@ public class RandomMaterial : MonoBehaviour
             _weight[rarityMaterials[i].rarity] = rarityMaterials[i].weight;
         }
     }
+    //private void Update()
+    //{
+    //    rarityMaterials[1].weight++;
+    //}
 
     public RariryEnum GetRandomMaterial()
     {

@@ -45,7 +45,11 @@ public class EnemyContoller : MonoBehaviour
         InitializeSteerings();
         InitializedTree();
         InitializeFSM();
-        _agentController.RunAStar();
+        if (_agentController != null)
+        {
+            IncreaseWaypontIndex();
+            _agentController.RunAStar();
+        }        
     }
 
     void InitializeFSM()
@@ -160,12 +164,13 @@ public class EnemyContoller : MonoBehaviour
         {
             _model.currentWaypointIndex++;
         }
-        if (_model.currentWaypointIndex == _model.waypoints.Length)
+        if (_model.currentWaypointIndex >= _model.waypoints.Length)
         {
             _model.currentWaypointIndex = 0;
         }
         _model.currentWayPoint = _model.waypoints[_model.currentWaypointIndex];
         _agentController.target = _model.currentWayPoint;
+        _agentController.RunAStar();
     }
     private void Update()
     {
@@ -175,11 +180,10 @@ public class EnemyContoller : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Box")
+        if (other.gameObject.tag == "Box")
         {
             _model.index = _model.currentWaypointIndex;
             IncreaseWaypontIndex();
-            _agentController.RunAStar();
         }
     }
     public IPoints GetStateWaypoints => _stateFollowPoints;
