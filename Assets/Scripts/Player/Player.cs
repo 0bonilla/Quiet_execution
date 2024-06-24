@@ -6,7 +6,7 @@ public class Player : MonoBehaviour, IPlayerModel
 {
     public float speed;
     [SerializeField] int life;
-    [SerializeField] float TotalCooldown;
+    public float TotalCooldown;
     public float AttackCooldown;
     Rigidbody _rb;
     public GameObject Daddy;
