@@ -9,6 +9,7 @@ public class RandomItem : MonoBehaviour
     Dictionary<RariryEnum, int> _weight;
     [SerializeField] private GameObject AttackWeapon;
     public Player _player;
+    private bool once = true;
 
     private void Awake()
     {
@@ -51,8 +52,9 @@ public class RandomItem : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player"){
+        if(other.gameObject.tag == "Player" && once == true){
             SetRandomItem();
+            once = false;
         }
     }
 }

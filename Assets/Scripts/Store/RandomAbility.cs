@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RandomAbility : MonoBehaviour
@@ -7,6 +8,7 @@ public class RandomAbility : MonoBehaviour
     public List<RarityInfo> rarityAbility = new List<RarityInfo>();
     Dictionary<RariryEnum, int> _weight;
     public Player _player;
+    private bool once = true;
 
     private void Awake()
     {
@@ -38,9 +40,10 @@ public class RandomAbility : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && once == true)
         {
             SetRandomItem();
+            once = false; 
         }
     }
 }
