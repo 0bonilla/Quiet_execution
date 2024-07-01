@@ -19,4 +19,8 @@ public class sceneManager : MonoBehaviour
             SceneManager.LoadScene(nextSceneIndex);
         }
     }
+    public void ChangeScene(int sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
