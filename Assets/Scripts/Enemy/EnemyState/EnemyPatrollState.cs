@@ -5,7 +5,6 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
 
 public class EnemyPatrolState<T> : State<T>, IPoints
 {

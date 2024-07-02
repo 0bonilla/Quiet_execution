@@ -19,6 +19,7 @@ public class RandomAbility : MonoBehaviour
             _weight[rarityAbility[i].rarity] = rarityAbility[i].weight;
         }
     }
+
     public RariryEnum GetRandomItem()
     {
         return MyRandoms.Roulette(_weight);
