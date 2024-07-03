@@ -4606,6 +4606,22 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 681976039}
+    - target: {fileID: 3133590024599241330, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394517632890858082, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
+      propertyPath: radius
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394517632890858082, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
+      propertyPath: maxBoids
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6075949078219889225, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
+      propertyPath: personalArea
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6622913569954308316, guid: f84aef558f72d6e4289f5808d9e46492, type: 3}
       propertyPath: target
       value: 
